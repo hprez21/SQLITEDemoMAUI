@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SQLITEDemo.MVVM.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SQLITEDemo.MVVM.ViewModels"
+    Title="MainPage">
+
+    <Grid RowDefinitions=".2*,.8*">
+        <VerticalStackLayout>
+            <Entry Placeholder="Name" Text="{Binding CurrentCustomer.Name}" />
+            <Entry Placeholder="Address" Text="{Binding CurrentCustomer.Address}" />
+            <Button Command="{Binding AddOrUpdateCommand}" Text="Add or Update" />
+        </VerticalStackLayout>
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Customers}"
+            SelectedItem="{Binding CurrentCustomer}"
+            SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.LeftItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    BackgroundColor="Purple"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=DeleteCommand}"
+                                    Text="Delete" />
+                            </SwipeItems>
+                        </SwipeView.LeftItems>
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Text="{Binding Name}" />
+                            <Label Grid.Column="1" Text="{Binding Address}" />
+                        </Grid>
+                    </SwipeView>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
